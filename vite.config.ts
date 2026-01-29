@@ -11,7 +11,7 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
         port: 3000,
-        allowedHosts: ['mes.grvt.cc'],
+        allowedHosts: ['grvt.cc', 'mes.grvt.cc'],
     },
     resolve: {
         alias: {
