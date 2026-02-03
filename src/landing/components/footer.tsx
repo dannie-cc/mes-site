@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Logo } from '@/shared/components/logo';
 
 export function Footer() {
@@ -17,23 +18,23 @@ export function Footer() {
                         <h3 className="text-white mb-4">Product</h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <a href="#" className="hover:text-cyan-400 transition-colors">
+                                <Link to="/#why" className="hover:text-cyan-400 transition-colors">
                                     Features
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-cyan-400 transition-colors">
-                                    Pricing
-                                </a>
+                                <Link to="/#solution" className="hover:text-cyan-400 transition-colors">
+                                    Solution
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/#reliability" className="hover:text-cyan-400 transition-colors">
+                                    Reliability
+                                </Link>
                             </li>
                             <li>
                                 <a href="#" className="hover:text-cyan-400 transition-colors">
                                     Documentation
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-cyan-400 transition-colors">
-                                    API Reference
                                 </a>
                             </li>
                         </ul>
@@ -43,9 +44,9 @@ export function Footer() {
                         <h3 className="text-white mb-4">Company</h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <a href="#" className="hover:text-cyan-400 transition-colors">
+                                <Link to="/about" className="hover:text-cyan-400 transition-colors">
                                     About
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="#" className="hover:text-cyan-400 transition-colors">
@@ -69,14 +70,14 @@ export function Footer() {
                         <h3 className="text-white mb-4">Legal</h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <a href="#" className="hover:text-cyan-400 transition-colors">
+                                <Link to="/privacy" className="hover:text-cyan-400 transition-colors">
                                     Privacy Policy
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-cyan-400 transition-colors">
+                                <Link to="/terms" className="hover:text-cyan-400 transition-colors">
                                     Terms of Service
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="#" className="hover:text-cyan-400 transition-colors">

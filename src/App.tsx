@@ -8,6 +8,8 @@ import { DashboardLayout } from './dashboard/layouts/dashboard-layout';
 // Landing Pages
 import { HomePage } from './landing/pages/home';
 import { AboutPage } from './landing/pages/about';
+import { PrivacyPage } from './landing/pages/privacy';
+import { TermsPage } from './landing/pages/terms';
 
 // Auth Pages
 import { LoginPage } from './features/auth/pages/login';
@@ -48,6 +50,8 @@ export default function App() {
                 <Route element={<LandingLayout />}>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/about" element={<AboutPage />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
+                    <Route path="/terms" element={<TermsPage />} />
                 </Route>
 
                 {/* Auth Routes (no layout wrapper) */}
