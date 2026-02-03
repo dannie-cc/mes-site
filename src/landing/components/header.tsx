@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Logo } from './logo';
+import { Button } from '@/shared/components/ui/button';
+import { Logo } from '@/shared/components/logo';
 
 export function Header() {
     return (
@@ -24,12 +24,16 @@ export function Header() {
                         <Link to="/about" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors">
                             About
                         </Link>
-                        <Button variant="outline" size="sm" className="border-slate-600 hover:bg-slate-800 hover:text-white font-medium">
-                            Documentation
-                        </Button>
-                        <Button size="sm" className="bg-cyan-500 hover:bg-cyan-600 text-white">
-                            Get Started
-                        </Button>
+                        <Link to="/login">
+                            <Button variant="outline" size="sm" className="border-slate-600 hover:bg-slate-800 hover:text-white font-medium">
+                                Sign In
+                            </Button>
+                        </Link>
+                        <Link to="/signup">
+                            <Button size="sm" className="bg-cyan-500 hover:bg-cyan-600 text-white">
+                                Get Started
+                            </Button>
+                        </Link>
                     </nav>
                 </div>
             </div>

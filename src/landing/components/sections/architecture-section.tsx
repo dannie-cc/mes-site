@@ -20,8 +20,8 @@ export function ArchitectureSection() {
                     <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
                         <FeatureCard
                             icon={Shield}
-                            title="Office Software Shouldn’t Touch Machines"
-                            description="Your finance and HR software should never control factory equipment. That’s how accidents happen. We keep them safely apart."
+                            title="Office Software Shouldn't Touch Machines"
+                            description="Your finance and HR software should never control factory equipment. That's how accidents happen. We keep them safely apart."
                             highlights={['Office tools stay in the office', 'Machines stay under factory control', 'Less risk, fewer shutdowns']}
                             delay={0}
                         />

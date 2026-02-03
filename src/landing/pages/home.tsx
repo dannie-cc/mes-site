@@ -1,8 +1,8 @@
-import { HeroSection } from '../components/landing-sections/hero-section';
-import { WhySection } from '../components/landing-sections/why-section';
-import { ArchitectureSection } from '../components/landing-sections/architecture-section';
-import { PhasesSection } from '../components/landing-sections/phases-section';
-import { CTASection } from '../components/landing-sections/cta-section';
+import { HeroSection } from '../components/sections/hero-section';
+import { WhySection } from '../components/sections/why-section';
+import { ArchitectureSection } from '../components/sections/architecture-section';
+import { PhasesSection } from '../components/sections/phases-section';
+import { CTASection } from '../components/sections/cta-section';
 
 export function HomePage() {
     return (

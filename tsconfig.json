@@ -16,6 +16,11 @@
         "skipLibCheck": false,
         "noEmit": true,
 
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+
         "types": ["node", "react", "react-dom"]
     },
     "include": ["src"]

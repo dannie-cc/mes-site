@@ -1,11 +1,6 @@
 import { FeatureCard } from '../feature-card';
 import { AlertTriangle, Network, ShieldAlert, Database } from 'lucide-react';
 
-// import tooManySystemsImage from '../../assets/why/1_tooManySystems.png';
-// import noTrustImage from '../../assets/why/2_nobodyTrustNumbers.png';
-// import factoryDisasterImage from '../../assets/why/3_oneClickAwayFromDisaster.png';
-// import humanErrorImage from '../../assets/why/4_humanTypingFail.png';
-
 export function WhySection() {
     return (
         <section className="py-20 bg-slate-900/50 backdrop-blur-sm">
@@ -21,7 +16,6 @@ export function WhySection() {
                         title="Too Many Systems, Nothing Talks"
                         description="Every new tool creates more chaos. One change breaks three others."
                         highlights={['Integrations grow out of control', 'Simple changes cause unexpected failures', 'No clear system ownership']}
-                        // backgroundImage={tooManySystemsImage}
                     />
 
                     <FeatureCard
@@ -30,7 +24,6 @@ export function WhySection() {
                         description="Every system shows different data. Meetings turn into arguments."
                         highlights={['Inventory never matches reality', 'Reports contradict each other', 'Decisions are based on guesses']}
                         delay={0.1}
-                        // backgroundImage={noTrustImage}
                     />
 
                     <FeatureCard
@@ -39,7 +32,6 @@ export function WhySection() {
                         description="Office IT and production machines share the same network."
                         highlights={['One virus can stop production', 'No isolation between systems', 'Security is an afterthought']}
                         delay={0.2}
-                        // backgroundImage={factoryDisasterImage}
                     />
 
                     <FeatureCard
@@ -48,7 +40,6 @@ export function WhySection() {
                         description="Manual input means errors, delays, and lost money."
                         highlights={['Wrong units, wrong values', 'Typos reach production', 'Audits expose data gaps']}
                         delay={0.3}
-                        // backgroundImage={humanErrorImage}
                     />
                 </div>
             </div>
