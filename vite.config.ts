@@ -12,6 +12,12 @@ export default defineConfig({
     server: {
         port: 3000,
         allowedHosts: ['grvt.cc', 'mes.grvt.cc'],
+        proxy: {
+            '/api': {
+                target: 'http://localhost:4000',
+                changeOrigin: true,
+            },
+        },
     },
     resolve: {
         alias: {
