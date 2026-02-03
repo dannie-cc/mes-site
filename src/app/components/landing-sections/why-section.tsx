@@ -1,4 +1,4 @@
-import { FeatureCard } from './feature-card';
+import { FeatureCard } from '../feature-card';
 import { AlertTriangle, Network, ShieldAlert, Database } from 'lucide-react';
 
 // import tooManySystemsImage from '../../assets/why/1_tooManySystems.png';

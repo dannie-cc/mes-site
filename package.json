@@ -1,8 +1,8 @@
 {
-    "name": "mes-platform-site",
+    "name": "mes-site",
     "description": "MES Platform Landing Site - Built with Vite, React, Tailwind CSS, and Radix UI",
     "private": true,
-    "version": "1.6.0",
+    "version": "1.7.0",
     "type": "module",
     "scripts": {
         "build": "vite build",

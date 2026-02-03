@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { FeatureCard } from './feature-card';
+import { FeatureCard } from '../feature-card';
 import { Shield, GitBranch, FolderTree, Clock } from 'lucide-react';
 
 export function ArchitectureSection() {

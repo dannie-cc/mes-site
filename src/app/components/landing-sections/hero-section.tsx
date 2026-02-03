@@ -1,7 +1,8 @@
 import { ArrowRight } from 'lucide-react';
-import { Button } from './ui/button';
 import { motion } from 'motion/react';
-import heroMockupImage from '../../assets/hero-mockup.jpeg';
+
+import { Button } from '../ui/button';
+import heroMockupImage from '../../../assets/hero-mockup.jpeg';
 
 export function HeroSection() {
     return (

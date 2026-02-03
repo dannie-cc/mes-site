@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  mes-platform-site:
-    container_name: mes-platform-site
+  mes-site:
+    container_name: mes-site
     build: .
     restart: unless-stopped
     ports:
