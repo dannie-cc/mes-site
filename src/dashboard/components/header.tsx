@@ -4,6 +4,7 @@ import { Input } from '@/shared/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { useAuth } from '@/features/auth/store/auth.store';
 import { Link } from 'react-router-dom';
+import { NotificationDropdown } from './notification-dropdown';
 
 interface DashboardHeaderProps {
     onMenuClick: () => void;
@@ -36,10 +37,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
 
                 <div className="flex items-center gap-2">
                     {/* Notifications */}
-                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white hover:bg-slate-800/50 relative">
-                        <Bell className="size-6" />
-                        <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-cyan-500 rounded-full border-2 border-slate-900" />
-                    </Button>
+                    <NotificationDropdown />
 
                     {/* User Menu */}
                     <DropdownMenu>
