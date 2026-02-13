@@ -1,87 +1,105 @@
 import { create } from 'zustand';
 import type { Notification } from '../types/notifications.types';
+import { notificationsService } from '../services/notifications.service';
 
 interface NotificationsState {
     notifications: Notification[];
     unreadCount: number;
+    isLoading: boolean;
+    pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    } | null;
 
     // Actions
-    addNotification: (notification: Notification) => void;
-    markAsRead: (id: string) => void;
-    markAllAsRead: () => void;
-    removeNotification: (id: string) => void;
+    fetchNotifications: (page?: number, limit?: number) => Promise<void>;
+    markAsRead: (id: string) => Promise<void>;
+    markAllAsRead: () => Promise<void>;
+    removeNotification: (id: string) => Promise<void>;
     clearAll: () => void;
 }
 
-const MOCK_NOTIFICATIONS: Notification[] = [
-    {
-        id: '1',
-        title: 'New User Registered',
-        description: 'A new user "John Doe" has joined the platform and is awaiting verification.',
-        type: 'info',
-        from: { name: 'System', isSystem: true },
-        isRead: false,
-        createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(), // 5 mins ago
+export const useNotificationStore = create<NotificationsState>((set, get) => ({
+    notifications: [],
+    unreadCount: 0,
+    isLoading: false,
+    pagination: null,
+
+    fetchNotifications: async (page = 1, limit = 50) => {
+        set({ isLoading: true });
+        try {
+            const response = await notificationsService.list({
+                page,
+                limit,
+                sortBy: 'createdAt',
+                sortOrder: 'desc',
+            });
+
+            set({
+                notifications: response.data,
+                unreadCount: response.data.filter((n) => n.status === 'unread').length,
+                pagination: response.pagination,
+                isLoading: false,
+            });
+        } catch (error) {
+            console.error('Failed to fetch notifications:', error);
+            set({ isLoading: false });
+        }
     },
-    {
-        id: '2',
-        title: 'Production Alert',
-        description: 'Line 4 in Factory A reported a temperature threshold violation.',
-        type: 'warning',
-        from: { name: 'IoT Monitor' },
-        isRead: false,
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2 hours ago
+
+    markAsRead: async (id) => {
+        try {
+            await notificationsService.markAsRead(id);
+
+            set((state) => {
+                const newNotifications = state.notifications.map((n) => (n.id === id ? { ...n, status: 'read' as const, readAt: new Date().toISOString() } : n));
+                return {
+                    notifications: newNotifications,
+                    unreadCount: newNotifications.filter((n) => n.status === 'unread').length,
+                };
+            });
+        } catch (error) {
+            console.error('Failed to mark notification as read:', error);
+        }
     },
-    {
-        id: '3',
-        title: 'Update Successful',
-        description: 'Your profile information has been updated successfully.',
-        type: 'success',
-        from: { name: 'Security' },
-        isRead: true,
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(), // 1 day ago
+
+    markAllAsRead: async () => {
+        try {
+            await notificationsService.markAllAsRead();
+
+            set((state) => {
+                const newNotifications = state.notifications.map((n) => ({
+                    ...n,
+                    status: 'read' as const,
+                    readAt: n.readAt || new Date().toISOString(),
+                }));
+                return {
+                    notifications: newNotifications,
+                    unreadCount: 0,
+                };
+            });
+        } catch (error) {
+            console.error('Failed to mark all notifications as read:', error);
+        }
     },
-];
 
-export const useNotificationStore = create<NotificationsState>((set) => ({
-    notifications: MOCK_NOTIFICATIONS,
-    unreadCount: MOCK_NOTIFICATIONS.filter((n) => !n.isRead).length,
+    removeNotification: async (id) => {
+        try {
+            await notificationsService.delete(id);
 
-    addNotification: (notification) =>
-        set((state) => {
-            const newNotifications = [notification, ...state.notifications];
-            return {
-                notifications: newNotifications,
-                unreadCount: newNotifications.filter((n) => !n.isRead).length,
-            };
-        }),
-
-    markAsRead: (id) =>
-        set((state) => {
-            const newNotifications = state.notifications.map((n) => (n.id === id ? { ...n, isRead: true } : n));
-            return {
-                notifications: newNotifications,
-                unreadCount: newNotifications.filter((n) => !n.isRead).length,
-            };
-        }),
-
-    markAllAsRead: () =>
-        set((state) => {
-            const newNotifications = state.notifications.map((n) => ({ ...n, isRead: true }));
-            return {
-                notifications: newNotifications,
-                unreadCount: 0,
-            };
-        }),
-
-    removeNotification: (id) =>
-        set((state) => {
-            const newNotifications = state.notifications.filter((n) => n.id !== id);
-            return {
-                notifications: newNotifications,
-                unreadCount: newNotifications.filter((n) => !n.isRead).length,
-            };
-        }),
+            set((state) => {
+                const newNotifications = state.notifications.filter((n) => n.id !== id);
+                return {
+                    notifications: newNotifications,
+                    unreadCount: newNotifications.filter((n) => n.status === 'unread').length,
+                };
+            });
+        } catch (error) {
+            console.error('Failed to delete notification:', error);
+        }
+    },
 
     clearAll: () => set({ notifications: [], unreadCount: 0 }),
 }));
@@ -91,6 +109,9 @@ export const useNotifications = () => {
     return {
         notifications: store.notifications,
         unreadCount: store.unreadCount,
+        isLoading: store.isLoading,
+        pagination: store.pagination,
+        fetchNotifications: store.fetchNotifications,
         markAsRead: store.markAsRead,
         markAllAsRead: store.markAllAsRead,
         removeNotification: store.removeNotification,

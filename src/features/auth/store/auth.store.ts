@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { authService } from '../services/auth.service';
 import { usersService } from '@/features/users/services/users.service';
+import { useNotificationStore } from '@/features/notifications/store/notifications.store';
 import type { User, LoginDto, SignupDto } from '../types/auth.types';
 import type { DetailedProfile } from '@/features/users/types/users.types';
 import type { ApiError } from '@/shared/lib/api-client';
@@ -52,8 +53,9 @@ export const useAuthStore = create<AuthState>()(
                         isAuthenticated: true,
                         isLoading: false,
                     });
-                    // Fetch full profile in the background
+                    // Fetch full profile and notifications in the background
                     get().fetchProfile();
+                    useNotificationStore.getState().fetchNotifications();
                 } catch (err) {
                     const apiError = err as ApiError;
                     set({
