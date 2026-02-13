@@ -8,6 +8,8 @@ import type {
     ResetPasswordDto,
     ResendVerificationDto,
     AuthResponse,
+    LoginResponse,
+    SignupResponse,
     MessageResponse,
     VerificationStatusResponse,
 } from '../types/auth.types';
@@ -19,8 +21,8 @@ export const authService = {
      * Register a new user
      * POST /auth/signup
      */
-    async signup(data: SignupDto): Promise<AuthResponse> {
-        return apiClient.post<AuthResponse>(`${AUTH_BASE}/signup`, data);
+    async signup(data: SignupDto): Promise<SignupResponse> {
+        return apiClient.post<SignupResponse>(`${AUTH_BASE}/signup`, data);
     },
 
     /**
@@ -35,8 +37,8 @@ export const authService = {
      * Login with email and password
      * POST /auth/login
      */
-    async login(data: LoginDto): Promise<AuthResponse> {
-        return apiClient.post<AuthResponse>(`${AUTH_BASE}/login`, data);
+    async login(data: LoginDto): Promise<LoginResponse> {
+        return apiClient.post<LoginResponse>(`${AUTH_BASE}/login`, data);
     },
 
     /**

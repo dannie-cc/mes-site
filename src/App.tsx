@@ -21,6 +21,8 @@ import { ProtectedRoute } from './features/auth/components/protected-route';
 
 // Dashboard Pages
 import { DashboardHome } from './dashboard/pages/home';
+import { ProfilePage } from './dashboard/pages/profile';
+import { UsersPage } from './dashboard/pages/users';
 
 function ScrollToHash() {
     const { hash, pathname } = useLocation();
@@ -69,6 +71,8 @@ export default function App() {
                         </ProtectedRoute>
                     }>
                     <Route path="/dashboard" element={<DashboardHome />} />
+                    <Route path="/dashboard/profile" element={<ProfilePage />} />
+                    <Route path="/dashboard/users" element={<UsersPage />} />
                     {/* Add more dashboard routes here */}
                 </Route>
             </Routes>

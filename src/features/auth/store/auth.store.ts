@@ -1,12 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { authService } from '../services/auth.service';
+import { usersService } from '@/features/users/services/users.service';
 import type { User, LoginDto, SignupDto } from '../types/auth.types';
+import type { DetailedProfile } from '@/features/users/types/users.types';
 import type { ApiError } from '@/shared/lib/api-client';
 
 interface AuthState {
     // State
     user: User | null;
+    detailedProfile: DetailedProfile | null;
     token: string | null;
     isLoading: boolean;
     error: string | null;
@@ -18,6 +21,7 @@ interface AuthState {
     login: (credentials: LoginDto) => Promise<void>;
     signup: (data: SignupDto) => Promise<void>;
     logout: () => Promise<void>;
+    fetchProfile: () => Promise<void>;
     clearError: () => void;
     setUser: (user: User) => void;
     setToken: (token: string) => void;
@@ -30,6 +34,7 @@ export const useAuthStore = create<AuthState>()(
         (set, get) => ({
             // Initial state
             user: null,
+            detailedProfile: null,
             token: null,
             isLoading: false,
             error: null,
@@ -47,6 +52,8 @@ export const useAuthStore = create<AuthState>()(
                         isAuthenticated: true,
                         isLoading: false,
                     });
+                    // Fetch full profile in the background
+                    get().fetchProfile();
                 } catch (err) {
                     const apiError = err as ApiError;
                     set({
@@ -63,12 +70,24 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     const response = await authService.signup(data);
                     localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
+                    // On signup, the backend returns email but not full user.
+                    // We set a partial user so the UI can show the email.
                     set({
-                        user: response.user,
+                        user: {
+                            id: '', // Temporary
+                            email: response.email,
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            isVerified: false,
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                        },
                         token: response.accessToken,
                         isAuthenticated: true,
                         isLoading: false,
                     });
+                    // Fetch full profile in the background
+                    get().fetchProfile();
                 } catch (err) {
                     const apiError = err as ApiError;
                     set({
@@ -90,11 +109,29 @@ export const useAuthStore = create<AuthState>()(
                     localStorage.removeItem(AUTH_TOKEN_KEY);
                     set({
                         user: null,
+                        detailedProfile: null,
                         token: null,
                         isAuthenticated: false,
                         isLoading: false,
                         error: null,
                     });
+                }
+            },
+
+            // Fetch profile action
+            fetchProfile: async () => {
+                try {
+                    const profile = await usersService.getCurrentProfile();
+                    set({ detailedProfile: profile });
+                } catch (err) {
+                    const apiError = err as ApiError;
+                    console.error('Failed to fetch profile:', err);
+
+                    // If we get a 401 (Unauthorized), it means the token is likely invalid
+                    // or malformed. We clear the session to allow the user to log in again.
+                    if (apiError.statusCode === 401) {
+                        get().logout();
+                    }
                 }
             },
 
@@ -114,6 +151,7 @@ export const useAuthStore = create<AuthState>()(
             name: 'auth-storage',
             partialize: (state) => ({
                 user: state.user,
+                detailedProfile: state.detailedProfile,
                 token: state.token,
                 isAuthenticated: state.isAuthenticated,
             }),
@@ -132,12 +170,14 @@ export const useAuth = () => {
     const store = useAuthStore();
     return {
         user: store.user,
+        detailedProfile: store.detailedProfile,
         isAuthenticated: store.isAuthenticated,
         isLoading: store.isLoading,
         error: store.error,
         login: store.login,
         signup: store.signup,
         logout: store.logout,
+        fetchProfile: store.fetchProfile,
         clearError: store.clearError,
     };
 };

@@ -78,10 +78,19 @@ export interface ResendVerificationDto {
 // API Response Types
 // ============================================
 
-export interface AuthResponse {
-    user: User;
+export interface LoginResponse {
     accessToken: string;
+    user: User;
+    settings?: Record<string, any>;
 }
+
+export interface SignupResponse {
+    accessToken: string;
+    email: string;
+    message: string;
+}
+
+export interface AuthResponse extends LoginResponse {}
 
 export interface MessageResponse {
     message: string;

@@ -42,16 +42,19 @@ class ApiClient {
 
         const data = await response.json();
 
+        // Handle backend wrapping (data property)
+        const responseData = data && typeof data === 'object' && 'data' in data ? data.data : data;
+
         if (!response.ok) {
             const error: ApiError = {
-                message: data.message || 'An error occurred',
+                message: (data && data.message) || 'An error occurred',
                 statusCode: response.status,
-                error: data.error,
+                error: data && data.error,
             };
             throw error;
         }
 
-        return data;
+        return responseData;
     }
 
     async get<T>(endpoint: string, options?: RequestInit): Promise<T> {

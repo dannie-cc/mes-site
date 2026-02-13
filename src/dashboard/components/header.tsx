@@ -3,6 +3,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { useAuth } from '@/features/auth/store/auth.store';
+import { Link } from 'react-router-dom';
 
 interface DashboardHeaderProps {
     onMenuClick: () => void;
@@ -66,10 +67,12 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-slate-800 mx-2" />
                             <div className="p-1">
-                                <DropdownMenuItem className="flex items-center gap-2 text-slate-300 focus:text-white focus:bg-slate-800/50 rounded-md cursor-pointer transition-colors px-3 py-2">
-                                    <User className="h-4 w-4" />
-                                    <span>Profile</span>
-                                </DropdownMenuItem>
+                                <Link to="/dashboard/profile">
+                                    <DropdownMenuItem className="flex items-center gap-2 text-slate-300 focus:text-white focus:bg-slate-800/50 rounded-md cursor-pointer transition-colors px-3 py-2">
+                                        <User className="h-4 w-4" />
+                                        <span>Profile</span>
+                                    </DropdownMenuItem>
+                                </Link>
                                 <DropdownMenuItem className="flex items-center gap-2 text-slate-300 focus:text-white focus:bg-slate-800/50 rounded-md cursor-pointer transition-colors px-3 py-2">
                                     <Bell className="h-4 w-4" />
                                     <span>Notifications</span>
