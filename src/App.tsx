@@ -23,6 +23,7 @@ import { ProtectedRoute } from './features/auth/components/protected-route';
 import { DashboardHome } from './dashboard/pages/home';
 import { ProfilePage } from './dashboard/pages/profile';
 import { UsersPage } from './dashboard/pages/users';
+import { ComingSoonPage } from './dashboard/pages/coming-soon';
 
 function ScrollToHash() {
     const { hash, pathname } = useLocation();
@@ -73,7 +74,15 @@ export default function App() {
                     <Route path="/dashboard" element={<DashboardHome />} />
                     <Route path="/dashboard/profile" element={<ProfilePage />} />
                     <Route path="/dashboard/users" element={<UsersPage />} />
-                    {/* Add more dashboard routes here */}
+
+                    {/* Coming Soon Pages */}
+                    <Route path="/dashboard/products" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/analytics" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/settings" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/reports" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/help" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/messages" element={<ComingSoonPage />} />
+                    <Route path="/dashboard/integration" element={<ComingSoonPage />} />
                 </Route>
             </Routes>
         </Router>

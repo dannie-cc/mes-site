@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Users, Settings, BarChart3, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, Package, Users, Settings, BarChart3, ChevronLeft, ChevronRight, FileText, HelpCircle, MessageSquare, Blocks } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { Logo } from '@/shared/components/logo';
 import { Button } from '@/shared/components/ui/button';
@@ -14,7 +14,11 @@ const navItems = [
     { name: 'Products', icon: Package, href: '/dashboard/products' },
     { name: 'Users', icon: Users, href: '/dashboard/users' },
     { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
+    { name: 'Reports', icon: FileText, href: '/dashboard/reports' },
+    { name: 'Messages', icon: MessageSquare, href: '/dashboard/messages' },
+    { name: 'Integration', icon: Blocks, href: '/dashboard/integration' },
     { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
+    { name: 'Help & Support', icon: HelpCircle, href: '/dashboard/help' },
 ];
 
 export function DashboardSidebar({ isOpen, onToggle }: DashboardSidebarProps) {
